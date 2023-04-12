@@ -1,0 +1,132 @@
+body {
+    background-color: rgb(59, 59, 255);
+}
+.login {
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.login-form {
+    position: relative;
+    border-radius: 25px;
+    width: 365px;
+    background-color: rgba(255, 255, 255, 0.074);
+    border: 1px solid rgba(255, 255, 255, 0.222);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    padding: 10px 40px 30px 40px;
+}
+.login-form .form-logo {
+    left: 50%;
+    transform: translate(-50%, -115%);
+    z-index: 1;
+    height: 105px;
+}
+.login-form h2 {
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+    display: block;
+    font-size: 1.5em;
+    margin-inline-start: 0px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.login-form label {
+    font-weight: 500;
+    font-size: 14px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    color: #fff;
+}
+.input-container {
+    display: flex;
+    align-items: center;
+}
+.login-form input {
+    outline: 0;
+    background: #f2f2f2;
+    border-radius: 15px;
+    width: 100%;
+    border: 0;
+    margin: 5px 0 10px 0;
+    padding: 15px;
+    font-size: 14px;
+}
+.login-form input:focus {
+    box-shadow: 0 0 5px 0 rgb(91, 117, 189);
+}
+.login-form img {
+    position: absolute;
+    cursor: pointer;
+    height: 20px;
+    right: 53px;
+    margin-bottom: 5px;
+}
+.login-form button {
+    outline: 0;
+    background: #d61c4e;
+    width: 100%;
+    border: 0;
+    margin-top: 20px;
+    border-radius: 15px;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 15px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+}
+.login-form button:hover,
+.login-form button:active,
+.login-form button:focus {
+    background: #3c7f11;
+    color: #ffffff;
+}
+.login-form .res-password a {
+    text-align: center;
+    color: white;
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 26px;
+    text-decoration: none;
+}
+.login-form .message a {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0093ff;
+    text-decoration: none;
+}
+.message {
+    margin: 16px 0;
+    text-align: center;
+}
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+    background-image: none;
+}
+@keyframes shake {
+    25% {
+        translate: 6px 0;
+    }
+    50% {
+        translate: -6px 0;
+    }
+    75% {
+        translate: 6px 0;
+    }
+}
+.invalid-feedback {
+    top: 172px;
+    right: 7px;
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 85%;
+    text-align: center;
+    color: #ef1f33;
+    animation: shake 0.2s 2;
+}
