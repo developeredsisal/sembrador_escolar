@@ -3,14 +3,15 @@
 
 <head>
     <x-head />
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <title>Sembrador Escolar - Inicio de sesión</title>
 </head>
 
 <body>
     <div class="login">
         <div class="login-form">
-            <img src="{{ asset('images/pse-logo.svg') }}" alt="Logo de Sembrador Escolar" class="form-logo">
-            <form method="POST" action="">
+            <img src="{{ asset('images/login-logo.svg') }}" alt="Logo de Sembrador Escolar" class="form-logo">
+            <form method="POST" action="{{ route('inicia-sesion') }}">
                 @csrf
                 <h2>Inicia sesión para continuar</h2>
                 <div class="form-group row">
@@ -54,7 +55,6 @@
         </div>
     </div>
 
-    <x-foot />
     <script>
         function togglePasswordVisibility() {
             var passwordInput = document.getElementById("password");

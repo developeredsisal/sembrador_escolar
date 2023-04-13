@@ -18,4 +18,61 @@ class LoginController extends Controller
 
         return $next($request);
     }
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required|same:password',
+        ]);
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        $role = Role::where('name', 'Grado ' . $request->input('role'))->first();
+
+        if (!$role) {
+            $role = Role::create(['name' => 'Grado ' . $request->input('role')]);
+        }
+        $user->assignRole($role);
+        $user->save();
+
+        Auth::login($user);
+        return redirect('inicio');
+    }
+    public function login(Request $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $credentials = [
+            'email' => $email,
+            'password' => $password
+        ];
+
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('inicio');
+        } else {
+            if (!User::where('email', $email)->exists()) {
+                $errors['email'] = 'El correo es incorrecto';
+            } elseif (!Auth::attempt(['password' => $password])) {
+                $errors['password'] = 'La contraseña es incorrecta';
+            }
+
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect(route('iniciosesion'));
+    }
 }

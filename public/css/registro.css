@@ -1,14 +1,14 @@
 body {
-    background-color: #3C486B;
+    background-color: #3c486b;
 }
-.login {
+.registro {
     height: 100vh;
     width: 100%;
     align-items: center;
     display: flex;
     justify-content: center;
 }
-.login-form {
+.registro-form {
     position: relative;
     border-radius: 25px;
     width: 365px;
@@ -16,15 +16,9 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.222);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
-    padding: 10px 40px 30px 40px;
+    padding: 10px 40px 40px 40px;
 }
-.login-form .form-logo {
-    left: 50%;
-    transform: translate(-50%, -130%);
-    z-index: 1;
-    height: 105px;
-}
-.login-form h2 {
+.registro-form h2 {
     text-align: center;
     font-family: "Poppins", sans-serif;
     color: #fff;
@@ -34,18 +28,27 @@ body {
     font-weight: bold;
     margin-top: 20px;
 }
-.login-form label {
+.registro-form label {
     font-weight: 500;
     font-size: 14px;
     padding-top: 10px;
-    padding-bottom: 5px;
     color: #fff;
 }
 .input-container {
     display: flex;
     align-items: center;
 }
-.login-form input {
+.registro-form input {
+    outline: 0;
+    background: #f2f2f2;
+    border-radius: 15px;
+    width: 100%;
+    border: 0;
+    margin: 5px 0 0 0;
+    padding: 15px;
+    font-size: 14px;
+}
+.registro-form select {
     outline: 0;
     background: #f2f2f2;
     border-radius: 15px;
@@ -55,22 +58,15 @@ body {
     padding: 15px;
     font-size: 14px;
 }
-.login-form input:focus {
+.registro-form input:focus {
     box-shadow: 0 0 5px 0 rgb(238, 150, 49);
 }
-.login-form img {
-    position: absolute;
-    cursor: pointer;
-    height: 20px;
-    right: 53px;
-    margin-bottom: 5px;
-}
-.login-form button {
+.registro-form button {
     outline: 0;
     background: #ff8a00;
     width: 100%;
     border: 0;
-    margin-top: 20px;
+    margin-top: 35px;
     border-radius: 15px;
     padding: 15px;
     color: #ffffff;
@@ -79,30 +75,11 @@ body {
     transition: all 0.4s ease-in-out;
     cursor: pointer;
 }
-.login-form button:hover,
-.login-form button:active,
-.login-form button:focus {
-    background: #FF0310;
+.registro-form button:hover,
+.registro-form button:active,
+.registro-form button:focus {
+    background: #ff0310;
     color: #ffffff;
-}
-.login-form .res-password a {
-    text-align: center;
-    color: white;
-    display: block;
-    font-size: 15px;
-    font-weight: 500;
-    margin-top: 26px;
-    text-decoration: none;
-}
-.login-form .message a {
-    font-size: 14px;
-    font-weight: 500;
-    color: #0093ff;
-    text-decoration: none;
-}
-.message {
-    margin: 16px 0;
-    text-align: center;
 }
 .form-control.is-invalid,
 .was-validated .form-control:invalid {
