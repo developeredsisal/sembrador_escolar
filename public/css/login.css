@@ -42,7 +42,7 @@ body {
     color: #fff;
 }
 .input-container {
-    display: flex;
+    display: grid;
     align-items: center;
 }
 .login-form input {
