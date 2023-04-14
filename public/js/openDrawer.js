@@ -10,10 +10,10 @@ if (isSidebarOpen === "true") {
 sidebarBtn.onclick = function() {
     sidebar.classList.toggle("active");
     if (sidebar.classList.contains("active")) {
-        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+        sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
         localStorage.setItem("isSidebarOpen", "true");
     } else {
-        sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
         localStorage.removeItem("isSidebarOpen");
     }
 }
