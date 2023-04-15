@@ -12,19 +12,31 @@
         <x-appbar />
 
         @role('admin')
-        <div class="contenido">
-            <h1>Administrador</h1>
-        </div>
+            <div class="contenido">
+                <div class="ocultar2">
+                    <form class="d-flex ocultar2" role="search">
+                        <input class="form-control btn-buscar" type="search" placeholder="Buscar..." aria-label="Search">
+                    </form>
+                </div>
+            </div>
         @endrole
         @role('Grado 1')
-        <div class="contenido">
-            <h1>Primero</h1>
-        </div>
+            <div class="contenido">
+                <div class="ocultar2">
+                    <form class="d-flex ocultar2" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search">
+                    </form>
+                </div>
+            </div>
         @endrole
         @role('Grado 2')
-        <div class="contenido">
-            <h1>Segundo</h1>
-        </div>
+            <div class="contenido">
+                <div class="ocultar2">
+                    <form class="d-flex ocultar2" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search">
+                    </form>
+                </div>
+            </div>
         @endrole
     </section>
     <x-foot />
