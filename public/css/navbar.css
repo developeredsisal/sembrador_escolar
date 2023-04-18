@@ -14,7 +14,11 @@
 .sidebar.active {
     width: 60px;
 }
-.logo-appbar {
+.logo-appbar1 {
+    width: 235px;
+    margin-left: 15px;
+}
+.logo-appbar2 {
     width: 220px;
 }
 .sidebar .nav-links {
@@ -91,7 +95,6 @@
 nav .sidebar-button i {
     font-size: 35px;
     margin-bottom: 10px;
-    margin-right: 10px;
 }
 .contenedor nav .search-box {
     position: relative;
