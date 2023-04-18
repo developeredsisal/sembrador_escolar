@@ -22,7 +22,7 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Grado</th>
                             <th scope="col">Imagen</th>
-                            <th scope="col" class="text-center">Acciones</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,37 +34,42 @@
                                 <td data-label="Grado">{{ $l->grado_nombre }}</td>
                                 <td data-label="Imagen"><img class="imagen"
                                         src="{{ URL::to('/') . '/lecturas/' . $l->id . '/' . $l->imagen }}"></td>
-                                <td data-label="Acciones" class="text-center">
-                                    <div class="btn-group me-2" role="group">
-                                        <form action="{{ route('editar-lectura', ['id' => $l->id]) }}" method="GET">
-                                            @csrf
-                                            @method('UPDATE')
-                                            <button type="submit" class="btn btn-warning" data-toggle="tooltip"
-                                                title="Editar">
-                                                <i class="material-icons">border_color</i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div class="btn-group me-2 my-2" role="group">
-                                        <form action="{{ route('subir-actividad', ['id' => $l->id]) }}" method="GET">
-                                            @csrf
-                                            @method('GET')
-                                            <button type="submit" class="btn btn-info" data-toggle="tooltip"
-                                                title="Actividades">
-                                                <i class="material-icons">bookmark_add</i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div class="btn-group me-2" role="group">
-                                        <form action="{{ route('eliminar-lectura', ['id' => $l->id]) }}" method="POST"
-                                            onsubmit="return confirm('¿Está seguro de que desea eliminar la lectura?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" data-toggle="tooltip"
-                                                title="Eliminar">
-                                                <i class="material-icons">delete</i>
-                                            </button>
-                                        </form>
+                                <td data-label="Acciones">
+                                    <div class="d-flex flex-column flex-sm-row align-items-center">
+                                        <div class="btn-group me-2" role="group">
+                                            <form action="{{ route('editar-lectura', ['id' => $l->id]) }}"
+                                                method="GET">
+                                                @csrf
+                                                @method('UPDATE')
+                                                <button type="submit" class="btn btn-warning" data-toggle="tooltip"
+                                                    title="Editar">
+                                                    <i class="material-icons">border_color</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="btn-group me-2 my-2" role="group">
+                                            <form action="{{ route('subir-actividad', ['id' => $l->id]) }}"
+                                                method="GET">
+                                                @csrf
+                                                @method('GET')
+                                                <button type="submit" class="btn btn-info" data-toggle="tooltip"
+                                                    title="Actividades">
+                                                    <i class="material-icons">bookmark_add</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="btn-group me-2" role="group">
+                                            <form action="{{ route('eliminar-lectura', ['id' => $l->id]) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('¿Está seguro de que desea eliminar la lectura?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" data-toggle="tooltip"
+                                                    title="Eliminar">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

@@ -32,7 +32,7 @@
                             <th scope="col" class="text-center">#</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Imagen</th>
-                            <th scope="col" class="text-center">Acciones</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,42 +44,44 @@
                                 <td data-label="Imagen"><img class="imagen"
                                         src="{{ URL::to('/') . '/actividades/' . $actividad->id . '/' . $actividad->imagen }}">
                                 </td>
-                                <td data-label="Acciones" class="text-center">
-                                    <div class="btn-group me-2" role="group">
-                                        <form action="{{ url('actividad/' . $actividad->id) }}" method="GET">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary" data-toggle="tooltip"
-                                                title="Ver">
-                                                <i class="material-icons">visibility</i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <div class="btn-group me-2 my-2" role="group">
-                                        <form
-                                            action="{{ route('editar-actividad', ['lectura_id' => $actividad->lectura_id, 'actividad_id' => $actividad->id]) }}"
-                                            method="GET">
-                                            @csrf
-                                            @method('UPDATE')
-                                            <button type="submit" class="btn btn-warning" data-toggle="tooltip"
-                                                title="Editar">
-                                                <i class="material-icons">border_color</i>
-                                            </button>
-                                        </form>
-                                    </div>
-
-                                    <div class="btn-group me-2" role="group">
-                                        <form action="{{ route('eliminar-actividad', ['id' => $actividad->id]) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('¿Está seguro de que desea eliminar la actividad?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" data-toggle="tooltip"
-                                                title="Eliminar">
-                                                <i class="material-icons">delete</i>
-                                            </button>
-                                        </form>
+                                <td data-label="Acciones">
+                                    <div class="d-flex flex-column flex-sm-row align-items-center">
+                                        <div class="btn-group me-2 mb-2" role="group">
+                                            <form action="{{ url('actividad/' . $actividad->id) }}" method="GET">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary" data-toggle="tooltip"
+                                                    title="Ver">
+                                                    <i class="material-icons">visibility</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="btn-group me-2 mb-2" role="group">
+                                            <form
+                                                action="{{ route('editar-actividad', ['lectura_id' => $actividad->lectura_id, 'actividad_id' => $actividad->id]) }}"
+                                                method="GET">
+                                                @csrf
+                                                @method('UPDATE')
+                                                <button type="submit" class="btn btn-warning" data-toggle="tooltip"
+                                                    title="Editar">
+                                                    <i class="material-icons">border_color</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="btn-group me-2 mb-2" role="group">
+                                            <form action="{{ route('eliminar-actividad', ['id' => $actividad->id]) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('¿Está seguro de que desea eliminar la actividad?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" data-toggle="tooltip"
+                                                    title="Eliminar">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>
