@@ -10,6 +10,6 @@ class UsuarioController extends Controller
     {
         $usuarios = User::with('roles')->get();
 
-        return view('usuarios', ['usuarios' => $usuarios]);
+        return view('usuario', ['usuarios' => $usuarios]);
     }
 }

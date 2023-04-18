@@ -1,0 +1,70 @@
+.table-responsive {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.acciones-div {
+    display: inline-block;
+}
+.acciones-form {
+    display: inline-block;
+}
+
+.btn-warning {
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+.btn-info {
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+th {
+    background-color: #f2f2f2;
+    color: #666;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+img.imagen {
+    max-width: 100px;
+    height: auto;
+}
+a.btn {
+    color: #fff;
+}
+
+form.delete-form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+button.btn-delete {
+    display: inline-block;
+    margin: 0;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background-color: #f44336;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+}
+button.btn-delete:hover {
+    background-color: #d32f2f;
+}

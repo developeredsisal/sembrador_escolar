@@ -12,7 +12,7 @@
         <x-appbar />
 
         <div class="contenido">
-            <h1>Usuarios</h1>
+            <h2>Usuarios</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>

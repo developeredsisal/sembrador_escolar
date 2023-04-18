@@ -4,15 +4,15 @@
         <span class="links_name">Inicio</span>
     </a>
 </li>
-<li>
-    <a href="{{ route('lecturas') }}" class="{{ Request::is('lecturas') ? 'active' : '' }}">
-        <i class='bx bx-book'></i>
-        <span class="links_name">Lecturas</span>
-    </a>
-</li>
 @role('admin')
     <li>
-        <a href="{{ route('usuarios') }}" class="{{ Request::is('usuarios') ? 'active' : '' }}">
+        <a href="{{ route('lectura') }}" class="{{ Request::is('lectura') ? 'active' : '' }}">
+            <i class='bx bx-book'></i>
+            <span class="links_name">Lecturas</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('usuario') }}" class="{{ Request::is('usuario') ? 'active' : '' }}">
             <i class='bx bx-user-circle'></i>
             <span class="links_name">Usuarios</span>
         </a>
