@@ -9,13 +9,22 @@ button.addEventListener("click", function () {
     this.innerHTML =
         '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo lectura...';
     this.classList.add("disabled");
-});
 
-const form = document.querySelector("form");
-form.addEventListener("submit", function () {
-    const button = this.querySelector('button[id="subir"]');
-    setTimeout(function () {
+    const form = document.querySelector("form");
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", form.action);
+    xhr.upload.addEventListener("progress", function (event) {
+        if (event.lengthComputable) {
+            const percentComplete = (event.loaded / event.total) * 100;
+            button.innerHTML =
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo lectura... ' +
+                percentComplete.toFixed(0) +
+                "%";
+        }
+    });
+    xhr.addEventListener("load", function () {
         button.innerHTML = "Guardar lectura";
         button.classList.remove("disabled");
-    }, 3000);
+    });
+    xhr.send(new FormData(form));
 });
