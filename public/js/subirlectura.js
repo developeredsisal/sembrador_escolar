@@ -6,25 +6,27 @@ imageUploadInput.addEventListener("change", function () {
 
 const button = document.querySelector('button[id="subir"]');
 button.addEventListener("click", function () {
-    this.innerHTML =
-        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo lectura...';
-    this.classList.add("disabled");
-
-    const form = document.querySelector("form");
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", form.action);
+    const formData = new FormData(form);
     xhr.upload.addEventListener("progress", function (event) {
         if (event.lengthComputable) {
-            const percentComplete = (event.loaded / event.total) * 100;
-            button.innerHTML =
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo lectura... ' +
-                percentComplete.toFixed(0) +
-                "%";
+            const percentComplete = Math.round(
+                (event.loaded / event.total) * 100
+            );
+            button.innerHTML = "Subiendo lectura... %" + percentComplete;
         }
     });
     xhr.addEventListener("load", function () {
         button.innerHTML = "Guardar lectura";
         button.classList.remove("disabled");
     });
-    xhr.send(new FormData(form));
+    xhr.open("POST", "/upload", true);
+    xhr.send(formData);
+
+    this.innerHTML =
+        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo lectura...';
+    this.classList.add("disabled");
 });
+
+const form = document.querySelector("form");
+form.addEventListener("submit", function () {});
