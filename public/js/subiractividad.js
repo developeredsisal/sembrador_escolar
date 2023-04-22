@@ -19,7 +19,7 @@ button.addEventListener("click", function () {
             const percentComplete = Math.round(
                 (event.loaded / event.total) * 100
             );
-            button.innerHTML = "Subiendo actividad..." + percentComplete + "%";
+            button.innerHTML = "Subiendo actividad... " + percentComplete + "%";
         }
     });
     xhr.addEventListener("load", function () {
