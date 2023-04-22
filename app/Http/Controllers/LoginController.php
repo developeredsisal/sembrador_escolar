@@ -33,10 +33,10 @@ class LoginController extends Controller
             'password' => Hash::make($request->input('password')),
         ]);
 
-        $role = Role::where('name', 'Grado ' . $request->input('role'))->first();
+        $role = Role::where('name', 'grado' . $request->input('role'))->first();
 
         if (!$role) {
-            $role = Role::create(['name' => 'Grado ' . $request->input('role')]);
+            $role = Role::create(['name' => 'grado' . $request->input('role')]);
         }
         $user->assignRole($role);
         $user->save();
@@ -74,5 +74,21 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect(route('iniciosesion'));
+    }
+
+    public function imagen()
+    {
+        $user = auth()->user();
+        $role = $user->getRoleNames()[0];
+        $imageNames = [
+            'admin' => 'admin.svg',
+            'grado1' => 'grado1.svg',
+        ];
+        $imageName = isset($imageNames[$role]) ? $imageNames[$role] : 'default.svg';
+        $imagePath = file_exists(public_path('images/' . $imageName)) ? $imageName : 'default.svg';
+    
+        session(['image_path' => $imagePath]);
+    
+        return view('inicio');
     }
 }

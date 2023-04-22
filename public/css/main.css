@@ -66,7 +66,7 @@ h4 {
         display: none;
     }
 }
-@media (min-width: 600px) {
+@media (min-width: 768px) {
     .ocultar2 {
         display: none;
     }

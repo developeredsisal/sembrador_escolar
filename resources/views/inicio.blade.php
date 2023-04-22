@@ -6,7 +6,8 @@
     <title>Sembrador Escolar - Inicio</title>
 </head>
 
-<body>
+<body
+    style="background-image: url('{{ asset('images/' . session('image_path')) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
     <x-navbar />
     <section class="contenedor">
         <x-appbar />
