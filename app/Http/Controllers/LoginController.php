@@ -83,6 +83,11 @@ class LoginController extends Controller
         $imageNames = [
             'admin' => 'admin.svg',
             'grado1' => 'grado1.svg',
+            'grado2' => 'grado2.svg',
+            'grado3' => 'grado3.svg',
+            'grado4' => 'grado4.svg',
+            'grado5' => 'grado5.svg',
+            'grado6' => 'grado6.svg',
         ];
         $imageName = isset($imageNames[$role]) ? $imageNames[$role] : 'default.svg';
         $imagePath = file_exists(public_path('images/' . $imageName)) ? $imageName : 'default.svg';
