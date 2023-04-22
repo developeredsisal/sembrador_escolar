@@ -12,7 +12,7 @@ fileUploadInput.addEventListener("change", function () {
 const button = document.querySelector('button[id="subir"]');
 button.addEventListener("click", function () {
     this.innerHTML =
-        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo lectura...';
+        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo actividad...';
     this.classList.add("disabled");
 
     const form = document.querySelector("form");
@@ -22,13 +22,13 @@ button.addEventListener("click", function () {
         if (event.lengthComputable) {
             const percentComplete = (event.loaded / event.total) * 100;
             button.innerHTML =
-                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo lectura... ' +
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo actividad... ' +
                 percentComplete.toFixed(0) +
                 "%";
         }
     });
     xhr.addEventListener("load", function () {
-        button.innerHTML = "Guardar lectura";
+        button.innerHTML = "Guardar actividad";
         button.classList.remove("disabled");
     });
     xhr.send(new FormData(form));

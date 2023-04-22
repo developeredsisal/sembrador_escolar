@@ -20,7 +20,7 @@ class LecturaController extends Controller
         $request->validate([
             'nombre' => 'required|max:255',
             'grado' => 'required|max:32',
-            'imagen' => 'required|image|max:1024'
+            'imagen' => 'required|image'
         ]);
 
         $lectura = new Lectura();
