@@ -11,7 +11,7 @@ class LecturaController extends Controller
 {
     public function create()
     {
-        $grados = DB::table('grado')->select('id', 'nombre')->orderByDesc('id')->get();
+        $grados = DB::table('grados')->select('id', 'nombre')->orderByDesc('id')->get();
         return view('lectura', ['grados' => $grados]);
     }
 
@@ -19,7 +19,7 @@ class LecturaController extends Controller
     {
         $request->validate([
             'nombre' => 'required|max:255',
-            'grado' => 'required|max:32',
+            'grado' => 'required|integer',
             'imagen' => 'required|image'
         ]);
 
@@ -74,7 +74,7 @@ class LecturaController extends Controller
         $request->validate([
             'nombre' => 'sometimes|max:255',
             'grado' => 'sometimes|integer',
-            'imagen' => 'sometimes|image|max:1024'
+            'imagen' => 'sometimes|image'
         ]);
 
         $lectura = Lectura::find($id);
