@@ -13,7 +13,7 @@ button.addEventListener("click", function () {
             const percentComplete = Math.round(
                 (event.loaded / event.total) * 100
             );
-            button.innerHTML = "Subiendo lectura... %" + percentComplete;
+            button.innerHTML = "Subiendo actividad... %" + percentComplete;
         }
     });
     xhr.addEventListener("load", function () {
@@ -29,4 +29,6 @@ button.addEventListener("click", function () {
 });
 
 const form = document.querySelector("form");
-form.addEventListener("submit", function () {});
+form.addEventListener("submit", function () {
+});
+
