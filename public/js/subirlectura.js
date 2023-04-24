@@ -48,8 +48,8 @@ button.addEventListener("click", function () {
     } else {
         if (form.checkValidity()) {
             button.innerHTML =
-                '<span class="spinner"></span> Subiendo lectura...';
-            button.classList.add("disabled", "loading");
+                'Cargando...';
+            button.classList.add("disabled");
         } else {
             alert("Por favor complete todos los campos requeridos");
         }

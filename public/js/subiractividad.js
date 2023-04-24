@@ -34,12 +34,15 @@ fileInput.addEventListener("change", () => {
 
 button.addEventListener("click", function () {
     if (!imagenInput.files || imagenInput.files.length === 0) {
+        event.preventDefault();
         imagenInput.classList.add("is-invalid");
         invalidImagenFeedback.style.display = "block";
     } else if (!fileInput.files || fileInput.files.length === 0) {
+        event.preventDefault();
         fileInput.classList.add("is-invalid");
         invalidFileFeedback.style.display = "block";
     } else if (!nombreInput.value) {
+        event.preventDefault();
         nombreInput.classList.add("is-invalid");
         invalidNombreFeedback.style.display = "block";
     } else {
