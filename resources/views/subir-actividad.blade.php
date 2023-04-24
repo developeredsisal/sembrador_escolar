@@ -123,30 +123,33 @@
                         <div class="form-group row">
                             <label class="label-file">{{ __('Nombre de la actividad') }}</label>
                             <input type="text" name="nombre" class="form-control" id="file-name-input" required>
+                            <div class="invalid-feedback">Ingresa un nombre válido</div>
                         </div>
                         <div class="form-group row">
-                            <small class="form-text text-muted">Tamaño de imagen: 500 x 333 píxeles</small>
+                            <label class="label-file">{{ __('Tamaño de imagen: 500 x 333 píxeles') }}</label>
                             <label for="image-upload-input" class="file-upload">
                                 <p>Selecciona la imagen</p>
                                 <span class="image-upload-name"></span>
                             </label>
-                            <input type="file" name="imagen" accept=".jpg, .jpeg, .png, .svg"
-                                id="image-upload-input" class="file-upload-input" required
-                                ondragover="handleDragOver(event)" ondrop="handleFileSelect(event)" />
+                            <input type="file" name="imagen" accept=".jpg, .jpeg, .png, .svg .webp"
+                                id="image-upload-input" class="file-upload-input" required>
+                            <div class="invalid-feedback">Selecciona una imagen</div>
                         </div>
 
                         <div class="form-group row">
-                            <small class="form-text text-muted">Archivo comprimido en zip</small>
+                            <label class="label-file">{{ __('Archivo comprimido en zip') }}</label>
                             <label for="file-upload-input" class="file-upload">
                                 <p>Selecciona el archivo</p>
                                 <span class="file-upload-name"></span>
                             </label>
                             <input type="file" name="archivo" accept=".zip" id="file-upload-input"
                                 class="file-upload-input" required>
+                            <div class="invalid-feedback">Selecciona un archivo</div>
                         </div>
                         <div class="btn-upload">
-                            <button id="subir" class="boton btn btn-primary" type="submit">Guardar
-                                actividad</button>
+                            <button id="subir" class="boton btn btn-warning " type="submit">
+                                Guardar actividad
+                            </button>
                         </div>
                     </form>
                 </div>

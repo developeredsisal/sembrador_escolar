@@ -1,8 +1,9 @@
-<form method="POST" action="{{ route('registrar-lectura') }}" class="form" enctype="multipart/form-data">
+<form method="POST" action="{{ route('registrar-lectura') }}" class="form" enctype="multipart/form-data" novalidate>
     @csrf
     <div class="form-group row">
-        <label class="label-file">{{ __('Nombre de la lectura') }}</label>
+        <label for="nombre-input" class="label-file">{{ __('Nombre de la lectura') }}</label>
         <input type="text" name="nombre" class="form-control" id="file-name-input" required autofocus>
+        <div class="invalid-feedback invalid-feedback-nombre">Por favor ingresa un nombre válido</div>
     </div>
     <div class="form-group row">
         <small class="form-text text-muted">Tamaño de imagen: 500 x 333 píxeles</small>
@@ -12,6 +13,7 @@
         </label>
         <input type="file" name="imagen" accept=".jpg, .jpeg, .png, .svg .webp" id="image-upload-input"
             class="file-upload-input" required>
+        <div class="invalid-feedback invalid-feedback-imagen">Selecciona una imagen</div>
     </div>
     <div class="form-group row">
         <select id="category-select" name="grado" class="form-select" required>
@@ -23,11 +25,13 @@
             <option value="5">Quinto</option>
             <option value="6">Sexto</option>
         </select>
+        <div class="invalid-feedback">Por favor selecciona un grado</div>
     </div>
 
     <div class="btn-upload">
-        <button id="subir" class="boton btn btn-primary" type="submit">Guardar lectura</button>
+        <button id="subir" class="boton btn btn-warning btn-loading" type="submit">Guardar lectura</button>
     </div>
 </form>
+
 
 <script src="{{ asset('js/subirlectura.js') }}"></script>

@@ -51,7 +51,7 @@ class ActividadController extends Controller
         }
 
         try {
-            return redirect()->route('subir-actividad', ['id' => $actividad->lectura_id])->with('success', 'La actividad se ha subido exitosamente.');
+            return redirect()->route('subir-actividad', ['id' => $actividad->lectura_id])->with('success', 'La actividad se ha creado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->route('subir-actividad', ['id' => $actividad->lectura_id])->with('error', 'Ha habido un error al subir la actividad: ' . $e->getMessage());
         }
