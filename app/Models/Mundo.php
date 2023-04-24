@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Actividad extends Model
+class Mundo extends Model
 {
     use HasFactory;
-    protected $table = 'actividad';
-    public function lectura()
+    protected $table = 'mundos';
+    public function niveles()
     {
-        return $this->belongsTo(Lectura::class);
+        return $this->hasMany(Nivel::class);
     }
 }

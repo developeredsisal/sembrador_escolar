@@ -3,16 +3,16 @@
 
 <head>
     <x-head />
-    <title>Sembrador Escolar - Lecturas</title>
+    <title>Sembrador Escolar - Mundos</title>
 </head>
 
 <body>
-    {{-- <x-navbar />
+    <x-navbar />
     <section class="contenedor">
         <x-appbar />
 
         <div class="contenido">
-            <h2>Lecturas</h2>
+            <h2>Mundos</h2>
 
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -27,18 +27,17 @@
                     </thead>
                     <tbody>
                         <?php $c = 1; ?>
-                        @foreach ($lecturas as $l)
+                        @foreach ($mundos as $m)
                             <tr>
                                 <td class="text-center">{{ $c++ }}</td>
-                                <td data-label="Nombre">{{ $l->nombre }}</td>
-                                <td data-label="Grado">{{ $l->grado_nombre }}</td>
+                                <td data-label="Nombre">{{ $m->nombre }}</td>
+                                <td data-label="Grado">{{ $m->grado_nombre }}</td>
                                 <td data-label="Imagen"><img class="imagen"
-                                        src="{{ URL::to('/') . '/lecturas/' . $l->id . '/' . $l->imagen }}"></td>
+                                        src="{{ URL::to('/') . '/mundos/' . $m->id . '/' . $m->imagen }}"></td>
                                 <td data-label="Acciones">
                                     <div class="d-flex flex-column flex-sm-row align-items-center">
                                         <div class="btn-group me-2" role="group">
-                                            <form action="{{ route('editar-lectura', ['id' => $l->id]) }}"
-                                                method="GET">
+                                            <form action="{{ route('editar-mundo', ['id' => $m->id]) }}" method="GET">
                                                 @csrf
                                                 @method('UPDATE')
                                                 <button type="submit" class="btn btn-warning" data-toggle="tooltip"
@@ -48,20 +47,18 @@
                                             </form>
                                         </div>
                                         <div class="btn-group me-2 my-2" role="group">
-                                            <form action="{{ route('subir-actividad', ['id' => $l->id]) }}"
-                                                method="GET">
+                                            <form action="" method="GET">
                                                 @csrf
                                                 @method('GET')
                                                 <button type="submit" class="btn btn-info" data-toggle="tooltip"
-                                                    title="Actividades">
+                                                    title="Niveles">
                                                     <i class="material-icons">bookmark_add</i>
                                                 </button>
                                             </form>
                                         </div>
                                         <div class="btn-group me-2" role="group">
-                                            <form action="{{ route('eliminar-lectura', ['id' => $l->id]) }}"
-                                                method="POST"
-                                                onsubmit="return confirm('¿Está seguro de que desea eliminar la lectura?')">
+                                            <form action="{{ route('eliminar-mundo', ['id' => $m->id]) }}" method="POST"
+                                                onsubmit="return confirm('¿Está seguro de que desea eliminar el mundo?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" data-toggle="tooltip"
@@ -95,7 +92,7 @@
         </div>
     @endif
 
-    <button id="btn-float" class="btn btn-primary btn-float" data-toggle="tooltip" title="Agregar lectura">
+    <button id="btn-float" class="btn btn-primary btn-float" data-toggle="tooltip" title="Agregar mundos">
         <span class="icon">
             <i class="material-icons">add</i>
         </span>
@@ -106,8 +103,8 @@
             <span class="close">
                 <i class="material-icons">cancel</i>
             </span>
-            <h4 class="card-title">Crear lectura</h4>
-            <x-subirlectura />
+            <h4 class="card-title">Crear mundo</h4>
+            <x-subirmundo />
         </div>
     </div>
     </div>
@@ -124,7 +121,7 @@
                 alertElement.classList.add('d-none');
             }, 4000);
         }
-    </script> --}}
+    </script>
 </body>
 
 </html>

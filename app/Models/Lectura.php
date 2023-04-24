@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lectura extends Model
 {
+    use HasFactory;
     protected $table = 'lectura';
+    public function nivel()
+    {
+        return $this->belongsTo(Nivel::class);
+    }
 
     public function actividades()
     {

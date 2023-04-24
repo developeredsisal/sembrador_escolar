@@ -7,9 +7,9 @@
     </li>
     @role('admin')
         <li>
-            <a href="{{ route('lectura') }}" class="{{ Request::is('lectura') ? 'active' : '' }}">
+            <a href="{{ route('mundo') }}" class="{{ Request::is('mundo') ? 'active' : '' }}">
                 <i class='bx bx-book'></i>
-                <span class="links_name ocultar">Lecturas</span>
+                <span class="links_name ocultar">Recursos</span>
             </a>
         </li>
         <li>

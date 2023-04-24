@@ -4,20 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('actividad', function (Blueprint $table) {
+        Schema::create('mundos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('imagen');
-            $table->string('archivo');
-            $table->unsignedBigInteger('lectura_id');
-            $table->foreign('lectura_id')->references('id')->on('lectura')->onDelete('cascade');
+            $table->unsignedBigInteger('grado_id');
+            $table->foreign('grado_id')->references('id')->on('grado')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('actividad');
+        Schema::dropIfExists('mundos');
     }
 };
