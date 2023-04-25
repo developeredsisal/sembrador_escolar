@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('nombre');
             $table->string('imagen');
             $table->unsignedBigInteger('nivel_id');
-            $table->foreign('nivel_id')->references('id')->on('niveles')->onDelete('cascade');
+            $table->foreign('nivel_id')->references('id')->on('nivel')->onDelete('cascade');
 
             $table->timestamps();
         });

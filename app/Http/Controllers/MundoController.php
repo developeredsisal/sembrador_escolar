@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mundo;
+use App\Models\Grado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
@@ -11,16 +12,16 @@ class MundoController extends Controller
 {
     public function create()
     {
-        $grados = DB::table('grado')->select('id', 'nombre')->orderByDesc('id')->get();
+        $grados = Grado::select('id', 'nombre')->orderByDesc('id')->get();
         return view('mundo', ['grados' => $grados]);
     }
 
     public function mundos()
     {
-        $mundos = Mundo::join('grado', 'mundos.grado_id', '=', 'grado.id')
-            ->select('mundos.id AS id', 'mundos.nombre AS nombre', 'mundos.imagen AS imagen', 'grado.id AS grado_id', 'grado.nombre AS grado_nombre')
-            ->orderBy('id')->get();
-        return view('mundo', ['mundos' => $mundos]);
+        $mundo = Mundo::with('grado')
+            ->orderBy('id')
+            ->get();
+        return view('mundo', compact('mundo'));
     }
 
     public function registrarMundo(Request $request)
@@ -109,21 +110,4 @@ class MundoController extends Controller
             return redirect()->route('mundo')->with('error', 'Ha habido un error al actualizar el mundo: ' . $e->getMessage());
         }
     }
-
-// public function mostrarLecturasConActividades()
-// {
-//     $lecturas = Lectura::with('actividades')
-//         ->join('grado', 'lectura.grado_id', '=', 'grado.id')
-//         ->select('lectura.id', 'lectura.nombre', 'lectura.imagen', 'grado.nombre as grado_nombre')
-//         ->orderBy('id')->get();
-
-//     return view('inicio', compact('lecturas'));
-// }
-
-// public function verActividades($id)
-// {
-//     $lectura = Lectura::findOrFail($id);
-//     $actividades = $lectura->actividades;
-//     return view('ver-actividades', compact('lectura', 'actividades'));
-// }
 }

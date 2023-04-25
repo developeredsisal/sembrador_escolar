@@ -5,50 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mundo;
 use App\Models\Nivel;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use ZipArchive;
 
 class NivelController extends Controller
 {
-    public function subir($mundos_id)
+    public function subirNiveles($idMundo)
     {
-        $mundo = Mundo::find($mundos_id);
-
-        return view('subir-nivel', ['mundo' => $mundo]);
-    }
-
-    public function mostrarNiveles($id)
-    {
-        $mundo = Mundo::findOrFail($id);
+        $mundo = Mundo::findOrFail($idMundo);
         $niveles = $mundo->niveles;
         return view('subir-nivel', compact('mundo', 'niveles'));
     }
 
-    public function registrarNivel(Request $request, $id)
-    {
 
+    public function mostrarNiveles($idMundo)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $niveles = $mundo->niveles;
+        return view('mostrar-niveles', compact('mundo', 'niveles'));
+    }
+
+    public function registrarNivel(Request $request, $idMundo)
+    {
         $nivel = new Nivel();
 
-        $nivel->mundo_id = $id;
-
         $nivel->nombre = $request->input('nombre');
-        $nivel->mundo_id = $request->input('mundo_id');
+        $nivel->mundo_id = $idMundo;
+
         if ($request->hasFile("imagen")) {
             $image = $request->file("imagen");
             $nivel->imagen = $image->getClientOriginalName();
         }
-
         $nivel->save();
 
         $image->move(public_path('niveles/' . $nivel->id), $image->getClientOriginalName());
 
         try {
-            return redirect()->route('subir-nivel', ['id' => $nivel->mundo_id])->with('success', 'El nivel se ha creado exitosamente.');
+            return redirect()->route('mostrar-niveles', ['idMundo' => $idMundo])->with('success', 'El nivel se ha creado exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->route('subir-nivel', ['id' => $nivel->mundo_id])->with('error', 'Ha habido un error al subir el nivel: ' . $e->getMessage());
+            return redirect()->route('mostrar-niveles', ['idMundo' => $idMundo])->with('error', 'Ha habido un error al subir el nivel: ' . $e->getMessage());
         }
     }
+
+
 
     public function eliminarNivel($id)
     {
@@ -69,29 +68,29 @@ class NivelController extends Controller
         }
     }
 
-    public function editarNivel($id_mundo, $id_nivel)
+    public function editarNivel($idMundo, $idNivel)
     {
-        $mundo = Mundo::find($id_mundo);
-        $nivel = Nivel::findOrFail($id_nivel);
+        $mundo = Mundo::find($idMundo);
+        $nivel = Nivel::findOrFail($idNivel);
 
         return view('editar-nivel', ['mundo' => $mundo, 'nivel' => $nivel]);
     }
 
-    public function actualizarNivel(Request $request, $id_mundo, $id_nivel)
+    public function actualizarNivel(Request $request, $idMundo, $idNivel)
     {
-        $nivel = Nivel::findOrFail($id_nivel);
+        $nivel = Nivel::findOrFail($idNivel);
 
         $nivel->nombre = $request->input('nombre');
-        $nivel->mundo_id = $id_mundo;
+        $nivel->mundo_id = $idMundo;
 
         if ($request->hasFile("imagen")) {
             $image = $request->file("imagen");
             $nivel->imagen = $image->getClientOriginalName();
-            $image->move(public_path('niveles/' . $nivel->id), $image->getClientOriginalName());
         }
-
         $nivel->save();
 
-        return redirect()->route('subir-nivel', ['id' => $id_mundo])->with('success', 'El nivel se ha actualizado exitosamente.');
+        $image->move(public_path('niveles/' . $nivel->id), $image->getClientOriginalName());
+
+        return redirect()->route('mostrar-niveles', ['idMundo' => $idMundo])->with('success', 'El nivel se ha actualizado exitosamente.');
     }
 }

@@ -46,7 +46,9 @@
                                 <td data-label="Acciones">
                                     <div class="d-flex flex-column flex-sm-row align-items-center">
                                         <div class="btn-group me-2" role="group">
-                                            <form action="{{ route('editar-nivel', ['mundo_id' => $nivel->mundo_id, 'nivel_id' => $nivel->id]) }}" method="GET">
+                                            <form
+                                                action="{{ route('editar-nivel', ['idMundo' => $mundo->id, 'idNivel' => $nivel->id]) }}"
+                                                method="GET">
                                                 @csrf
                                                 @method('UPDATE')
                                                 <button type="submit" class="btn btn-warning" data-toggle="tooltip"
@@ -66,7 +68,8 @@
                                             </form>
                                         </div>
                                         <div class="btn-group me-2" role="group">
-                                            <form action="{{ route('eliminar-nivel', ['id' => $nivel->id]) }}" method="POST"
+                                            <form action="{{ route('eliminar-nivel', ['id' => $nivel->id]) }}"
+                                                method="POST"
                                                 onsubmit="return confirm('¿Está seguro de que desea eliminar el mundo?')">
                                                 @csrf
                                                 @method('DELETE')

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Nivel extends Model
 {
     use HasFactory;
-    protected $table = 'niveles';
+    protected $table = 'nivel';
     public function mundo()
     {
         return $this->belongsTo(Mundo::class);

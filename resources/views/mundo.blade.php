@@ -27,7 +27,7 @@
                     </thead>
                     <tbody>
                         <?php $c = 1; ?>
-                        @foreach ($mundos as $m)
+                        @foreach ($mundo as $m)
                             <tr>
                                 <td class="text-center">{{ $c++ }}</td>
                                 <td data-label="Nombre">{{ $m->nombre }}</td>
@@ -47,7 +47,8 @@
                                             </form>
                                         </div>
                                         <div class="btn-group me-2 my-2" role="group">
-                                            <form action="{{ route('subir-nivel', ['id' => $m->id]) }}" method="GET">
+                                            <form action="{{ route('subir-nivel', ['idMundo' => $m->id]) }}
+                                                " method="GET">
                                                 @csrf
                                                 @method('GET')
                                                 <button type="submit" class="btn btn-info" data-toggle="tooltip"

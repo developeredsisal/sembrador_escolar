@@ -10,12 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('niveles', function (Blueprint $table) {
+        Schema::create('nivel', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('imagen');
-            $table->unsignedBigInteger('mundos_id');
-            $table->foreign('mundos_id')->references('id')->on('mundos')->onDelete('cascade');
+            $table->unsignedBigInteger('mundo_id');
+            $table->foreign('mundo_id')->references('id')->on('mundo')->onDelete('cascade');
             $table->timestamps();
         });
     }

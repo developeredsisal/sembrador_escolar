@@ -15,7 +15,7 @@
             <h2>Editar el nivel: {{ $nivel->nombre }}</h2>
             <div class="card-body">
                 <form
-                    action="{{ route('actualizar-nivel', ['mundo_id' => $nivel->mundo_id, 'nivel_id' => $nivel->id]) }}"
+                    action="{{ route('actualizar-nivel', ['id_mundo' => $mundo->id, 'id_nivel' => $nivel->id]) }}"
                     method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -39,7 +39,7 @@
                                     actividad.</small>
                             </div>
                             <div class="py-3">
-                                <a class="a" href="{{ route('subir-nivel', ['id' => $mundo->id]) }}">
+                                <a class="a" href="{{ route('subir-nivel', ['idMundo' => $mundo->id]) }}">
                                     <button type="button" class="btn btn-secondary btn-md">Cancelar</button>
                                 </a>
                                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
