@@ -22,7 +22,7 @@ class NivelController extends Controller
     {
         $mundo = Mundo::findOrFail($idMundo);
         $niveles = $mundo->niveles;
-        return view('mostrar-niveles', compact('mundo', 'niveles'));
+        return view('subir-nivel', compact('mundo', 'niveles'));
     }
 
     public function registrarNivel(Request $request, $idMundo)
@@ -41,9 +41,9 @@ class NivelController extends Controller
         $image->move(public_path('niveles/' . $nivel->id), $image->getClientOriginalName());
 
         try {
-            return redirect()->route('mostrar-niveles', ['idMundo' => $idMundo])->with('success', 'El nivel se ha creado exitosamente.');
+            return redirect()->route('subir-nivel', ['idMundo' => $idMundo])->with('success', 'El nivel se ha creado exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->route('mostrar-niveles', ['idMundo' => $idMundo])->with('error', 'Ha habido un error al subir el nivel: ' . $e->getMessage());
+            return redirect()->route('subir-nivel', ['idMundo' => $idMundo])->with('error', 'Ha habido un error al subir el nivel: ' . $e->getMessage());
         }
     }
 
@@ -78,6 +78,11 @@ class NivelController extends Controller
 
     public function actualizarNivel(Request $request, $idMundo, $idNivel)
     {
+        $request->validate([
+            'nombre' => 'sometimes|max:255',
+            'imagen' => 'sometimes|image'
+        ]);
+
         $nivel = Nivel::findOrFail($idNivel);
 
         $nivel->nombre = $request->input('nombre');
@@ -86,11 +91,11 @@ class NivelController extends Controller
         if ($request->hasFile("imagen")) {
             $image = $request->file("imagen");
             $nivel->imagen = $image->getClientOriginalName();
+            $image->move(public_path('niveles/' . $nivel->id), $image->getClientOriginalName());
         }
         $nivel->save();
 
-        $image->move(public_path('niveles/' . $nivel->id), $image->getClientOriginalName());
 
-        return redirect()->route('mostrar-niveles', ['idMundo' => $idMundo])->with('success', 'El nivel se ha actualizado exitosamente.');
+        return redirect()->route('subir-nivel', ['idMundo' => $idMundo])->with('success', 'El nivel se ha actualizado exitosamente.');
     }
 }

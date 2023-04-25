@@ -16,7 +16,7 @@ Route::group(['middleware' => 'App\Http\Middleware\AuthAdmin'], function () {
     Route::get('/mundo/{id}/editar', [MundoController::class, 'editarMundo'])->name('editar-mundo');
 
     Route::get('/mundo/{idMundo}/nivel', [NivelController::class, 'subirNiveles'])->name('subir-nivel');
-    Route::get('/mundo/{idMundo}/niveles', [NivelController::class, 'mostrarNiveles'])->name('mostrar-niveles');
+    Route::get('/mundo/{idMundo}/niveles', [NivelController::class, 'mostrarNiveles'])->name('subir-nivel');
     Route::get('/mundo/{idMundo}/nivel/{idNivel}/editar', [NivelController::class, 'editarNivel'])->name('editar-nivel');
 
     Route::post('/registrar-mundo', [MundoController::class, 'registrarMundo'])->name('registrar-mundo');

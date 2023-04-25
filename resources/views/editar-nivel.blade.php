@@ -34,9 +34,7 @@
                                 <label for="imagen" class="col-form-label">{{ __('Imagen') }}</label>
                                 <input type="file" name="imagen" id="imagen" class="form-control">
                                 <small class="form-text text-muted">Selecciona una nueva imagen para actualizar la
-                                    imagen actual, el tamaño recomendado es de 500 x 388 píxeles, si deseas cambiar el
-                                    archivo de la actividad te recomendamos eliminar y subir de nuevo la
-                                    actividad.</small>
+                                    imagen actual, el tamaño recomendado es de 500 x 388 pixeles.</small>
                             </div>
                             <div class="py-3">
                                 <a class="a" href="{{ route('subir-nivel', ['idMundo' => $mundo->id]) }}">
