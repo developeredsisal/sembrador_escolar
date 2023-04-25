@@ -47,7 +47,7 @@
                                             </form>
                                         </div>
                                         <div class="btn-group me-2 my-2" role="group">
-                                            <form action="" method="GET">
+                                            <form action="{{ route('subir-nivel', ['id' => $m->id]) }}" method="GET">
                                                 @csrf
                                                 @method('GET')
                                                 <button type="submit" class="btn btn-info" data-toggle="tooltip"
