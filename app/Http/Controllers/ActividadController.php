@@ -5,114 +5,139 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Actividad;
 use App\Models\Lectura;
+use App\Models\Mundo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use ZipArchive;
 
 class ActividadController extends Controller
 {
-    // public function subir($lectura_id)
-    // {
-    //     $lectura = Lectura::find($lectura_id);
+    public function subirActividades($idMundo, $idNivel, $idLectura)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lectura = $nivel->lecturas()->findOrFail($idLectura);
+        $actividades = $lectura->actividades;
 
-    //     return view('subir-actividad', ['lectura' => $lectura]);
-    // }
+        return view('subir-actividad', compact('mundo', 'nivel', 'lectura', 'actividades'));
+    }
+    public function registrarActividad(Request $request, $idMundo, $idNivel, $idLectura)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lectura = $nivel->lecturas()->findOrFail($idLectura);
 
-    // public function registrarActividad(Request $request, $id)
-    // {
+        $actividad = new Actividad();
+        $actividad->nombre = $request->input('nombre');
+        $actividad->archivo = "index.html";
+        $actividad->lectura_id = $lectura->id;
+        $actividad->lectura_id = $request->input('lectura_id');
 
-    //     $actividad = new Actividad();
+        if ($request->hasFile("imagen")) {
+            $image = $request->file("imagen");
+            $actividad->imagen = $image->getClientOriginalName();
+        }
 
-    //     $actividad->lectura_id = $id;
+        $actividad->save();
 
-    //     $actividad->nombre = $request->input('nombre');
-    //     $actividad->archivo = "index.html";
-    //     $actividad->lectura_id = $request->input('lectura_id');
-    //     if ($request->hasFile("imagen")) {
-    //         $image = $request->file("imagen");
-    //         $actividad->imagen = $image->getClientOriginalName();
-    //     }
+        $image->move(public_path('actividades/' . $actividad->id), $image->getClientOriginalName());
 
-    //     $actividad->save();
+        if ($request->hasFile("archivo")) {
+            $archivo = $request->file("archivo");
+            if ($_FILES["archivo"]["name"]) {
+                $nombre = $_FILES["archivo"]["name"];
+                $ruta = $_FILES["archivo"]["tmp_name"];
+                $tipo = $_FILES["archivo"]["type"];
+                $zip = new ZipArchive();
+                if ($zip->open($ruta) === true) {
+                    $extraido = $zip->extractTo(public_path('actividades/' . $actividad->id));
+                    $zip->close();
+                }
+            }
+        }
 
-    //     $image->move(public_path('actividades/' . $actividad->id), $image->getClientOriginalName());
-    //     if ($request->hasFile("archivo")) {
-    //         $archivo = $request->file("archivo");
-    //         if ($_FILES["archivo"]["name"]) {
-    //             $nombre = $_FILES["archivo"]["name"];
-    //             $ruta = $_FILES["archivo"]["tmp_name"];
-    //             $tipo = $_FILES["archivo"]["type"];
-    //             $zip = new ZipArchive();
-    //             if ($zip->open($ruta) === true) {
-    //                 $extraido = $zip->extractTo(public_path('actividades/' . $actividad->id));
-    //                 $zip->close();
-    //             }
-    //         }
-    //     }
+        try {
+            return redirect()->route('subir-actividad', ['idMundo' => $idMundo, 'idNivel' => $idNivel, 'idLectura' => $idLectura])->with('success', 'La actividad se ha subido exitosamente');
+        } catch (\Exception $e) {
+            return redirect()->route('subir-actividad', ['idMundo' => $idMundo, 'idNivel' => $idNivel, 'idLectura' => $idLectura])->with('error', 'Ha ocurrido un error al subir la actividad');
+        }
+    }
 
-    //     try {
-    //         return redirect()->route('subir-actividad', ['id' => $actividad->lectura_id])->with('success', 'La actividad se ha creado exitosamente.');
-    //     } catch (\Exception $e) {
-    //         return redirect()->route('subir-actividad', ['id' => $actividad->lectura_id])->with('error', 'Ha habido un error al subir la actividad: ' . $e->getMessage());
-    //     }
-    // }
+    public function eliminarActividad($idMundo, $idNivel, $idLectura, $idActividad)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lectura = $nivel->lecturas()->findOrFail($idLectura);
+        $actividad = $lectura->actividades()->findOrFail($idActividad);
 
-    // public function eliminarActividad($id)
-    // {
-    //     $actividad = Actividad::find($id);
+        if ($actividad) {
+            $actividad_path = public_path("actividades/{$actividad->id}");
 
-    //     if ($actividad) {
-    //         $actividad_path = public_path("actividades/{$actividad->id}");
+            if (File::exists($actividad_path)) {
+                File::deleteDirectory($actividad_path);
+            }
 
-    //         if (File::exists($actividad_path)) {
-    //             File::deleteDirectory($actividad_path);
-    //         }
+            $actividad->delete();
 
-    //         $actividad->delete();
+            return redirect()->back()->with('success', 'La actividad se ha eliminado exitosamente.');
+        } else {
+            return redirect()->back()->with('error', 'No se ha podido eliminar la actividad.');
+        }
+    }
 
-    //         return redirect()->back()->with('success', 'La actividad se ha eliminado exitosamente.');
-    //     } else {
-    //         return redirect()->back()->with('error', 'No se ha podido eliminar la actividad.');
-    //     }
-    // }
+    public function editarActividad($idMundo, $idNivel, $idLectura, $idActividad)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lectura = $nivel->lecturas()->findOrFail($idLectura);
+        $actividad = $lectura->actividades()->findOrFail($idActividad);
 
-    // public function editarActividad($id_lectura, $id_actividad)
-    // {
-    //     $lectura = Lectura::find($id_lectura);
-    //     $actividad = Actividad::findOrFail($id_actividad);
+        return view('editar-actividad', compact('mundo', 'nivel', 'lectura', 'actividad'));
+    }
 
-    //     return view('editar-actividad', ['lectura' => $lectura, 'actividad' => $actividad]);
-    // }
+    public function actualizarActividad(Request $request, $idMundo, $idNivel, $idLectura, $idActividad)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lectura = $nivel->lecturas()->findOrFail($idLectura);
+        $actividad = $lectura->actividades()->findOrFail($idActividad);
 
+        $actividad->nombre = $request->input('nombre');
+        $actividad->archivo = "index.html";
+        $actividad->lectura_id = $idLectura;
 
-    // public function actualizarActividad(Request $request, $id_lectura, $id_actividad)
-    // {
-    //     $actividad = Actividad::findOrFail($id_actividad);
+        if ($request->hasFile("imagen")) {
+            $image = $request->file("imagen");
+            $actividad->imagen = $image->getClientOriginalName();
+            $image->move(public_path('actividades/' . $actividad->id), $image->getClientOriginalName());
+        }
 
-    //     $actividad->nombre = $request->input('nombre');
-    //     $actividad->lectura_id = $id_lectura;
+        $actividad->save();
 
-    //     if ($request->hasFile("imagen")) {
-    //         $image = $request->file("imagen");
-    //         $actividad->imagen = $image->getClientOriginalName();
-    //         $image->move(public_path('actividades/' . $actividad->id), $image->getClientOriginalName());
-    //     }
+        if ($request->hasFile("archivo")) {
+            $archivo = $request->file("archivo");
+            if ($_FILES["archivo"]["name"]) {
+                $nombre = $_FILES["archivo"]["name"];
+                $ruta = $_FILES["archivo"]["tmp_name"];
+                $tipo = $_FILES["archivo"]["type"];
+                $zip = new ZipArchive();
+                if ($zip->open($ruta) === true) {
+                    $extraido = $zip->extractTo(public_path('actividades/' . $actividad->id));
+                    $zip->close();
+                }
+            }
+        }
 
-    //     $actividad->save();
+        try {
+            return redirect()->route('subir-actividad', ['idMundo' => $idMundo, 'idNivel' => $idNivel, 'idLectura' => $idLectura, 'idActividad' => $idActividad])->with('success', 'La actividad se ha actualizado corrrectamente');
+        } catch (\Exception $e) {
+            return redirect()->route('subir-actividad', ['idMundo' => $idMundo, 'idNivel' => $idNivel, 'idLectura' => $idLectura, 'idActividad' => $idActividad])->with('error', 'Ha fallado la actualización de la actividad');
+        }
+    }
 
-    //     return redirect()->route('subir-actividad', ['id' => $id_lectura])->with('success', 'La actividad se ha actualizado exitosamente.');
-    // }
-
-    // public function actividad($id)
-    // {
-    //     $actividad = DB::table('actividad')->where('id', '=', $id)->get()->toArray();
-    //     return view('ver-actividad', ['actividad' => $actividad]);
-    // }
-
-    // public function mostrarActividades($id)
-    // {
-    //     $lectura = Lectura::findOrFail($id);
-    //     $actividades = $lectura->actividades;
-    //     return view('subir-actividad', compact('lectura', 'actividades'));
-    // }
+    public function actividad($id)
+    {
+        $actividad = DB::table('actividad')->where('id', '=', $id)->get()->toArray();
+        return view('ver-actividad', ['actividad' => $actividad]);
+    }
 }

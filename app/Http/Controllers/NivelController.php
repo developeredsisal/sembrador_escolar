@@ -17,14 +17,6 @@ class NivelController extends Controller
         return view('subir-nivel', compact('mundo', 'niveles'));
     }
 
-
-    public function mostrarNiveles($idMundo)
-    {
-        $mundo = Mundo::findOrFail($idMundo);
-        $niveles = $mundo->niveles;
-        return view('subir-nivel', compact('mundo', 'niveles'));
-    }
-
     public function registrarNivel(Request $request, $idMundo)
     {
         $nivel = new Nivel();

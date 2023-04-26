@@ -15,7 +15,7 @@
             <h2>Editar la actividad: {{ $actividad->nombre }}</h2>
             <div class="card-body">
                 <form
-                    action="{{ route('actualizar-actividad', ['lectura_id' => $actividad->lectura_id, 'actividad_id' => $actividad->id]) }}"
+                    action="{{ route('actualizar-actividad', ['idMundo' => $mundo->id, 'idNivel' => $nivel->id, 'idLectura' => $lectura->id, 'idActividad' => $actividad->id]) }}"
                     method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -34,12 +34,18 @@
                                 <label for="imagen" class="col-form-label">{{ __('Imagen') }}</label>
                                 <input type="file" name="imagen" id="imagen" class="form-control">
                                 <small class="form-text text-muted">Selecciona una nueva imagen para actualizar la
-                                    imagen actual, el tamaño recomendado es de 500 x 388 píxeles, si deseas cambiar el
-                                    archivo de la actividad te recomendamos eliminar y subir de nuevo la
-                                    actividad.</small>
+                                    imagen actual, el tamaño recomendado es de 500 x 388 píxeles.</small>
                             </div>
+                            <div class="form-group">
+                                <label for="file-upload-input" class="col-form-label">{{ __('Archivo') }}</label>
+                                <input type="file" name="archivo" accept=".zip" id="file-upload-input" class="form-control">
+                                <small class="form-text text-muted">Selecciona un nuevo archivo para actualizar
+                                    el actual, el formato recomendado es un archivo comprimido en zip.</small>
+                            </div>
+            
                             <div class="py-3">
-                                <a class="a" href="{{ route('subir-actividad', ['id' => $lectura->id]) }}">
+                                <a class="a"
+                                    href="{{ route('subir-actividad', ['idMundo' => $mundo->id, 'idNivel' => $nivel->id, 'idLectura' => $lectura->id]) }}">
                                     <button type="button" class="btn btn-secondary btn-md">Cancelar</button>
                                 </a>
                                 <button type="submit" class="btn btn-primary">Guardar cambios</button>

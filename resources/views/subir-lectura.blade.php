@@ -58,11 +58,11 @@
                                             </form>
                                         </div>
                                         <div class="btn-group me-2 my-2" role="group">
-                                            <form action="" method="GET">
+                                            <form action="{{ route('subir-actividad', ['idMundo' => $mundo->id, 'idNivel' => $nivel->id, 'idLectura' => $lectura->id]) }}" method="GET">
                                                 @csrf
                                                 @method('GET')
                                                 <button type="submit" class="btn btn-info" data-toggle="tooltip"
-                                                    title="Lecturas">
+                                                    title="Actividades">
                                                     <i class="material-icons">bookmark_add</i>
                                                 </button>
                                             </form>

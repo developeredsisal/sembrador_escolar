@@ -19,14 +19,6 @@ class LecturaController extends Controller
 
         return view('subir-lectura', compact('mundo', 'nivel', 'lecturas'));
     }
-    public function mostrarLecturas($idMundo, $idNivel)
-    {
-        $mundo = Mundo::findOrFail($idMundo);
-        $nivel = $mundo->niveles()->findOrFail($idNivel);
-        $lecturas = $nivel->lecturas;
-
-        return view('subir-lectura', compact('mundo', 'nivel', 'lecturas'));
-    }
     public function registrarLectura(Request $request, $idMundo, $idNivel)
     {
         $mundo = Mundo::findOrFail($idMundo);

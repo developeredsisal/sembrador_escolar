@@ -13,14 +13,14 @@
 
         <div class="contenido">
             <div class="pb-3">
-                <a href="{{ route('lectura') }}">
+                <a href="{{ route('subir-lectura', ['idMundo' => $mundo->id, 'idNivel' => $nivel->id]) }}">
                     <button class="atras">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
                             fill="#000000">
                             <path d="M0 0h24v24H0V0z" fill="none" />
                             <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
                         </svg>
-                        <span>Atras</span>
+                        <span>Lecturas</span>
                     </button>
                 </a>
             </div>
@@ -57,7 +57,7 @@
                                         </div>
                                         <div class="btn-group me-2 mb-2" role="group">
                                             <form
-                                                action="{{ route('editar-actividad', ['lectura_id' => $actividad->lectura_id, 'actividad_id' => $actividad->id]) }}"
+                                                action="{{ route('editar-actividad', ['idMundo' => $mundo->id, 'idNivel' => $nivel->id, 'idLectura' => $lectura->id, 'idActividad' => $actividad->id]) }}"
                                                 method="GET">
                                                 @csrf
                                                 @method('UPDATE')
@@ -68,7 +68,8 @@
                                             </form>
                                         </div>
                                         <div class="btn-group me-2 mb-2" role="group">
-                                            <form action="{{ route('eliminar-actividad', ['id' => $actividad->id]) }}"
+                                            <form
+                                                action="{{ route('eliminar-actividad', ['idMundo' => $mundo->id, 'idNivel' => $nivel->id, 'idLectura' => $lectura->id, 'idActividad' => $actividad->id]) }}"
                                                 method="POST"
                                                 onsubmit="return confirm('¿Está seguro de que desea eliminar la actividad?')">
                                                 @csrf
@@ -115,9 +116,10 @@
                     <span class="close">
                         <i class="material-icons">cancel</i>
                     </span>
-                    <h4 class="card-title">Subir actividad</h4>
-                    <form method="POST" action="/lectura/{{ $lectura->id }}/actividad/registrar" class="form"
-                        enctype="multipart/form-data">
+                    <h4 class="card-title">Actividad</h4>
+                    <form method="POST"
+                        action="{{ route('registrar-actividad', ['idMundo' => $mundo->id, 'idNivel' => $nivel->id, 'idLectura' => $lectura->id]) }}"
+                        class="form" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="lectura_id" value="{{ $lectura->id }}">
                         <div class="form-group row">
