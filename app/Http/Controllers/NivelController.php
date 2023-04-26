@@ -46,9 +46,35 @@ class NivelController extends Controller
             return redirect()->route('subir-nivel', ['idMundo' => $idMundo])->with('error', 'Ha habido un error al subir el nivel: ' . $e->getMessage());
         }
     }
-
-
-
+    public function editarNivel($idMundo, $idNivel)
+    {
+        $mundo = Mundo::find($idMundo);
+        $nivel = Nivel::findOrFail($idNivel);
+        
+        return view('editar-nivel', ['mundo' => $mundo, 'nivel' => $nivel]);
+    }
+    public function actualizarNivel(Request $request, $idMundo, $idNivel)
+    {
+        $request->validate([
+            'nombre' => 'sometimes|max:255',
+            'imagen' => 'sometimes|image'
+        ]);
+        
+        $nivel = Nivel::findOrFail($idNivel);
+        
+        $nivel->nombre = $request->input('nombre');
+        $nivel->mundo_id = $idMundo;
+        
+        if ($request->hasFile("imagen")) {
+            $image = $request->file("imagen");
+            $nivel->imagen = $image->getClientOriginalName();
+            $image->move(public_path('niveles/' . $nivel->id), $image->getClientOriginalName());
+        }
+        $nivel->save();
+        
+        
+        return redirect()->route('subir-nivel', ['idMundo' => $idMundo])->with('success', 'El nivel se ha actualizado exitosamente.');
+    }
     public function eliminarNivel($id)
     {
         $nivel = Nivel::find($id);
@@ -66,36 +92,5 @@ class NivelController extends Controller
         } else {
             return redirect()->back()->with('error', 'No se ha podido eliminar el nivel.');
         }
-    }
-
-    public function editarNivel($idMundo, $idNivel)
-    {
-        $mundo = Mundo::find($idMundo);
-        $nivel = Nivel::findOrFail($idNivel);
-
-        return view('editar-nivel', ['mundo' => $mundo, 'nivel' => $nivel]);
-    }
-
-    public function actualizarNivel(Request $request, $idMundo, $idNivel)
-    {
-        $request->validate([
-            'nombre' => 'sometimes|max:255',
-            'imagen' => 'sometimes|image'
-        ]);
-
-        $nivel = Nivel::findOrFail($idNivel);
-
-        $nivel->nombre = $request->input('nombre');
-        $nivel->mundo_id = $idMundo;
-
-        if ($request->hasFile("imagen")) {
-            $image = $request->file("imagen");
-            $nivel->imagen = $image->getClientOriginalName();
-            $image->move(public_path('niveles/' . $nivel->id), $image->getClientOriginalName());
-        }
-        $nivel->save();
-
-
-        return redirect()->route('subir-nivel', ['idMundo' => $idMundo])->with('success', 'El nivel se ha actualizado exitosamente.');
     }
 }

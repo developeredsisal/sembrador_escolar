@@ -2,128 +2,104 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mundo;
 use App\Models\Lectura;
+use App\Models\Nivel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 
 class LecturaController extends Controller
 {
-    // public function create()
-    // {
-    //     $grados = DB::table('grados')->select('id', 'nombre')->orderByDesc('id')->get();
-    //     return view('lectura', ['grados' => $grados]);
-    // }
+    public function subirLecturas($idMundo, $idNivel)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lecturas = $nivel->lecturas;
 
-    // public function registrar(Request $request)
-    // {
-    //     $request->validate([
-    //         'nombre' => 'required|max:255',
-    //         'grado' => 'required|integer',
-    //         'imagen' => 'required|image'
-    //     ]);
+        return view('subir-lectura', compact('mundo', 'nivel', 'lecturas'));
+    }
+    public function mostrarLecturas($idMundo, $idNivel)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lecturas = $nivel->lecturas;
 
-    //     $lectura = new Lectura();
-    //     $nombre_lectura = $request->input('nombre');
-    //     $lectura->nombre = $nombre_lectura;
-    //     $lectura->grado_id = $request->input('grado');
-    //     if ($request->hasFile('imagen')) {
-    //         $image = $request->file('imagen');
-    //         $lectura->imagen = $image->getClientOriginalName();
-    //     }
-    //     $lectura->save();
+        return view('subir-lectura', compact('mundo', 'nivel', 'lecturas'));
+    }
+    public function registrarLectura(Request $request, $idMundo, $idNivel)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
 
-    //     $image->move(public_path('lecturas/' . $lectura->id), $image->getClientOriginalName());
+        $lectura = new Lectura();
+        $lectura->nombre = $request->input('nombre');
+        $lectura->nivel_id = $nivel->id;
 
-    //     try {
-    //         return redirect()->route('lectura')->with('success', 'La lectura se ha creado exitosamente.');
-    //     } catch (\Exception $e) {
-    //         return redirect()->route('lectura')->with('error', 'Ha habido un error al crear la lectura: ' . $e->getMessage());
-    //     }
-    // }
+        if ($request->hasFile("imagen")) {
+            $image = $request->file("imagen");
+            $lectura->imagen = $image->getClientOriginalName();
+        }
 
-    // public function eliminar($id)
-    // {
-    //     $lectura = Lectura::find($id);
+        $lectura->save();
 
-    //     if ($lectura) {
-    //         $lectura_path = public_path("lecturas/{$lectura->id}");
+        $image->move(public_path('lecturas/' . $lectura->id), $image->getClientOriginalName());
 
-    //         if (File::exists($lectura_path)) {
-    //             File::deleteDirectory($lectura_path);
-    //         }
+        try {
+            return redirect()->route('subir-lectura', ['idMundo' => $idMundo, 'idNivel' => $idNivel])->with('success', 'La lectura se ha subido exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('subir-lectura', ['idMundo' => $idMundo, 'idNivel' => $idNivel])->with('error', 'Ha habido un error al subir la lectura: ' . $e->getMessage());
+        }
+    }
+    public function editarLectura($idMundo, $idNivel, $idLectura)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lectura = $nivel->lecturas()->findOrFail($idLectura);
 
-    //         $lectura->delete();
+        return view('editar-lectura', compact('mundo', 'nivel', 'lectura'));
+    }
+    public function actualizarLectura(Request $request, $idMundo, $idNivel, $idLectura)
+    {
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lectura = $nivel->lecturas()->findOrFail($idLectura);
 
-    //         return redirect()->back()->with('success', 'La lectura se ha eliminado exitosamente.');
-    //     } else {
-    //         return redirect()->back()->with('error', 'No se ha podido eliminar la lectura.');
-    //     }
-    // }
+        $lectura->nombre = $request->input('nombre');
 
-    // public function editarLectura($id)
-    // {
-    //     $lectura = Lectura::find($id);
-    //     $grados = DB::table('grado')->select('id', 'nombre')->orderBy('id')->get();
+        if ($request->hasFile("imagen")) {
+            $image = $request->file("imagen");
+            $lectura->imagen = $image->getClientOriginalName();
+            $image->move(public_path('lecturas/' . $lectura->id), $image->getClientOriginalName());
+        }
 
-    //     return view('editar-lectura', compact('lectura', 'grados'));
-    // }
+        $lectura->save();
 
-    // public function actualizarLectura(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'nombre' => 'sometimes|max:255',
-    //         'grado' => 'sometimes|integer',
-    //         'imagen' => 'sometimes|image'
-    //     ]);
+        try {
+            return redirect()->route('subir-lectura', ['idMundo' => $idMundo, 'idNivel' => $idNivel])->with('success', 'La lectura se ha actualizado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('subir-lectura', ['idMundo' => $idMundo, 'idNivel' => $idNivel])->with('error', 'Ha habido un error al actualizar la lectura: ' . $e->getMessage());
+        }
+    }
+    public function eliminarLectura($idMundo, $idNivel, $idLectura)
+    {
+        try {
+            $mundo = Mundo::findOrFail($idMundo);
+            $nivel = $mundo->niveles()->findOrFail($idNivel);
+            $lectura = $nivel->lecturas()->findOrFail($idLectura);
 
-    //     $lectura = Lectura::find($id);
+            if (!empty($lectura->imagen)) {
+                $rutaImagen = public_path('lecturas/' . $lectura->id . '/' . $lectura->imagen);
+                if (file_exists($rutaImagen)) {
+                    unlink($rutaImagen);
+                }
+            }
 
-    //     if ($request->has('nombre')) {
-    //         $lectura->nombre = $request->input('nombre');
-    //     }
+            $lectura->delete();
 
-    //     if ($request->has('grado')) {
-    //         $lectura->grado_id = $request->input('grado');
-    //     }
-
-    //     if ($request->hasFile('imagen')) {
-    //         $image = $request->file('imagen');
-    //         $lectura->imagen = $image->getClientOriginalName();
-    //         $image->move(public_path('lecturas/' . $lectura->id), $image->getClientOriginalName());
-    //     }
-
-    //     $lectura->save();
-
-    //     try {
-    //         return redirect()->route('lectura')->with('success', 'La lectura se ha actualizado correctamente.');
-    //     } catch (\Exception $e) {
-    //         return redirect()->route('lectura')->with('error', 'Ha habido un error al actualizar la lectura: ' . $e->getMessage());
-    //     }
-    // }
-
-    // public function lecturas()
-    // {
-    //     $lecturas = Lectura::join('grado', 'lectura.grado_id', '=', 'grado.id')
-    //         ->select('lectura.id AS id', 'lectura.nombre AS nombre', 'lectura.imagen AS imagen', 'grado.id AS grado_id', 'grado.nombre AS grado_nombre')
-    //         ->orderBy('id')->get();
-    //     return view('lectura', ['lecturas' => $lecturas]);
-    // }
-
-    // public function mostrarLecturasConActividades()
-    // {
-    //     $lecturas = Lectura::with('actividades')
-    //         ->join('grado', 'lectura.grado_id', '=', 'grado.id')
-    //         ->select('lectura.id', 'lectura.nombre', 'lectura.imagen', 'grado.nombre as grado_nombre')
-    //         ->orderBy('id')->get();
-
-    //     return view('inicio', compact('lecturas'));
-    // }
-
-    // public function verActividades($id)
-    // {
-    //     $lectura = Lectura::findOrFail($id);
-    //     $actividades = $lectura->actividades;
-    //     return view('ver-actividades', compact('lectura', 'actividades'));
-    // }
+            return redirect()->route('subir-lectura', ['idMundo' => $idMundo, 'idNivel' => $idNivel])->with('success', 'La lectura se ha eliminado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('subir-lectura', ['idMundo' => $idMundo, 'idNivel' => $idNivel])->with('error', 'Ha habido un error al eliminar la lectura: ' . $e->getMessage());
+        }
+    }
 }

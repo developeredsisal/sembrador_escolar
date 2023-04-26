@@ -31,7 +31,7 @@
                             <tr>
                                 <td class="text-center">{{ $c++ }}</td>
                                 <td data-label="Nombre">{{ $m->nombre }}</td>
-                                <td data-label="Grado">{{ $m->grado_nombre }}</td>
+                                <td data-label="Grado">{{ $m->grado->nombre }}</td>
                                 <td data-label="Imagen"><img class="imagen"
                                         src="{{ URL::to('/') . '/mundos/' . $m->id . '/' . $m->imagen }}"></td>
                                 <td data-label="Acciones">
