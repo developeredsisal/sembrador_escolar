@@ -83,23 +83,22 @@ class LecturaController extends Controller
     }
     public function eliminarLectura($idMundo, $idNivel, $idLectura)
     {
-        try {
-            $mundo = Mundo::findOrFail($idMundo);
-            $nivel = $mundo->niveles()->findOrFail($idNivel);
-            $lectura = $nivel->lecturas()->findOrFail($idLectura);
+        $mundo = Mundo::findOrFail($idMundo);
+        $nivel = $mundo->niveles()->findOrFail($idNivel);
+        $lectura = $nivel->lecturas()->findOrFail($idLectura);
 
-            if (!empty($lectura->imagen)) {
-                $rutaImagen = public_path('lecturas/' . $lectura->id . '/' . $lectura->imagen);
-                if (file_exists($rutaImagen)) {
-                    unlink($rutaImagen);
-                }
+        if ($lectura) {
+            $lectura_path = public_path("lecturas/{$lectura->id}");
+
+            if (File::exists($lectura_path)) {
+                File::deleteDirectory($lectura_path);
             }
 
             $lectura->delete();
 
-            return redirect()->route('subir-lectura', ['idMundo' => $idMundo, 'idNivel' => $idNivel])->with('success', 'La lectura se ha eliminado exitosamente.');
-        } catch (\Exception $e) {
-            return redirect()->route('subir-lectura', ['idMundo' => $idMundo, 'idNivel' => $idNivel])->with('error', 'Ha habido un error al eliminar la lectura: ' . $e->getMessage());
+            return redirect()->back()->with('success', 'La lectura se ha eliminado exitosamente.');
+        } else {
+            return redirect()->back()->with('error', 'No se ha podido eliminar la lectura.');
         }
     }
 }
